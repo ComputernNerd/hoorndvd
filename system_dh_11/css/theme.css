@@ -1,0 +1,88 @@
+/*
+Theme:      Easy Steps, Hoorn, 1
+Author:     Sander Tiekstra
+Company:    Tiekstramedia, http://tiekstramedia.nl
+
+Color:      hex: #188b25 / rgb: 24, 139, 37 
+*/
+
+/*	Theming
+-------------------------------------------------------------------- */
+header {
+	border-top-color: #188b25;
+}
+
+nav ul li.active a,
+nav ul li.active a:focus,
+nav ul li.active a:hover {
+	border-color: #188b25;
+	background-color: #188b25;
+	background-image: url('img/bg.gradient-nav-active.png');
+	-webkit-box-shadow: 0 0 2em rgba(24, 139, 37, .5);
+	   -moz-box-shadow: 0 0 2em rgba(24, 139, 37, .5);
+	        box-shadow: 0 0 2em rgba(24, 139, 37, .5);
+}
+
+.ie6 nav ul li.active a,
+.ie6 nav ul li.active a:focus,
+.ie6 nav ul li.active a:hover {
+	background-image: none;
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+	-webkit-box-shadow: 0 0 .5em rgba(24, 139, 37, .6);
+	   -moz-box-shadow: 0 0 .5em rgba(24, 139, 37, .6);
+	        box-shadow: 0 0 .5em rgba(24, 139, 37, .6);
+}
+
+nav ul li a:focus,
+nav ul li.active a:focus {
+	-webkit-box-shadow: none;
+	   -moz-box-shadow: none;
+	        box-shadow: none;
+}
+
+#content section ul.chapters li a:focus,
+#content section ul.chapters li a:hover,
+#content section ul.chapters li.open a {
+	color: #188b25;
+	text-decoration: none;
+}
+
+#content section a,
+#content section ul.chapters li.open * a {
+	color: #333;
+}
+
+#content section a:focus,
+#content section a:hover,
+#content section ul.chapters li * a:focus,
+#content section ul.chapters li * a:hover,
+#content section ul.chapters li.open * a:focus,
+#content section ul.chapters li.open * a:hover {
+	color: #188b25;
+	text-decoration: underline;
+}
+
+#content section .active a,
+#content section ul.chapters li.active a,
+#content section ul.chapters dd.active a {
+	color: #188b25;	
+}
+
+#content section span.video,
+#content section span.audio,
+#content section span.doc {
+	background-color: #ddd;
+}
+
+#content section a:hover span.video, #content section a:focus span.video, #content section .active span.video,
+#content section a:hover span.audio, #content section a:focus span.audio, #content section .active span.audio,
+#content section a:hover span.doc, #content section a:focus span.doc, #content section .active span.doc {
+	background-color: #188b25;
+}
+
+#player.audio .wrapper {
+	background-color: #188b25;
+}
