@@ -9,7 +9,6 @@ $(function (){
 
 	// VARS
 	var targetBlank;
-	var playerHtml = $('#player').html();
 	
 	// EVENTS
 	/* activate links and open audio, video or documents */
@@ -54,11 +53,11 @@ $(function (){
 	
 	/* close player */
 	$('#player-close').live('click', function() {
-		closePlayer(playerHtml);
+		closePlayer();
 	});
 	$(window).keydown(function(e) {
 		if (e.keyCode == 27) {
-			closePlayer(playerHtml);
+			closePlayer();
 		};
 	});
 	
@@ -79,22 +78,7 @@ $(function (){
 });
 
 function openAudio(t, h, w, txt) {
-	
-	var flashvars = {};
-	flashvars.volume         = ".7";
-	flashvars.baseColor      = "0x000000";
-	flashvars.baseColorAlpha = "0";
-	flashvars.flagAutoPlay   = "true";
-	flashvars.audio          = t;
-
-
-	var params = {};
-	params.menu = "false";
-	params.quality = "high";
-	params.allowFullScreen = "true";
-	params.wmode = "transparent";
-
-	var attributes = {};
+	var audioSrc = resolveMediaSource(t);
 
 	$('#player').css({
 		height: h + "px",
@@ -102,9 +86,10 @@ function openAudio(t, h, w, txt) {
 		marginTop: "-" + (h/2) - 40 + $(document).scrollTop() + "px",
 		marginLeft: "-" + (w/2) + "px"
 	});
-	
-	swfobject.embedSWF("player/audioPlayer.swf", "audio-player", w, h, "10.0.0", false, flashvars, params, attributes);
-	
+
+	$('#video-player').empty();
+	$('#audio-player').html('<audio controls autoplay preload="metadata" style="width:100%;"><source src="' + audioSrc + '" type="audio/mpeg" />Your browser does not support the audio element.</audio>');
+
 	var h = $('body').height() > $(window).height() ? $('body').height() : $(window).height();
 	$('#overlay').height(h).show();
 	$('#player h1').text(txt);
@@ -112,22 +97,7 @@ function openAudio(t, h, w, txt) {
 }
 
 function openVideo(t, h, w) {
-		
-	var flashvars = {};
-	flashvars.volume         = ".7";
-	flashvars.baseColor      = "0x000000";
-	flashvars.baseColorAlpha = "0.5";
-	flashvars.flagAutoPlay   = "true";
-	flashvars.imagePreview   = "player/poster.png";
-	flashvars.video          = t;
-	
-	var params = {};
-	params.menu = "false";
-	params.quality = "high";
-	params.allowFullScreen = "true";
-	params.wmode = "transparent";
-
-	var attributes = {};
+	var videoSrc = resolveMediaSource(t);
 	
 	$('#player').css({
 		height: h + "px",
@@ -135,8 +105,9 @@ function openVideo(t, h, w) {
 		marginTop: "-" + (h/2) - 0 + $(document).scrollTop() + "px",
 		marginLeft: "-" + (w/2) + "px"
 	});
-	
-	swfobject.embedSWF("player/videoPlayer.swf", "video-player", w, h, "10.0.0", false, flashvars, params, attributes);
+
+	$('#audio-player').empty();
+	$('#video-player').html('<video controls autoplay preload="metadata" style="width:100%; height:100%;"><source src="' + videoSrc + '" />Your browser does not support the video tag.</video>');
 	
 	var h = $('body').height() > $(window).height() ? $('body').height() : $(window).height();
 	$('#overlay').height(h).show();
@@ -144,11 +115,30 @@ function openVideo(t, h, w) {
 	$('#player').removeClass('audio').addClass('video').fadeIn('slow');
 }
 
-function closePlayer(html) {
+function closePlayer() {
+	$('#audio-player audio').each(function() {
+		this.pause();
+	});
+	$('#video-player video').each(function() {
+		this.pause();
+	});
 	$("#player").fadeOut('slow');
 	$("#overlay").hide();
-	$('#audio-player').replaceWith('<div id="audio-player"></div>');
-	$('#video-player').replaceWith('<div id="video-player"></div>');
+	$('#audio-player').empty();
+	$('#video-player').empty();
+}
+
+function resolveMediaSource(target) {
+	if (!target) {
+		return "";
+	}
+	if (typeof target === "string") {
+		return target;
+	}
+	if (target.href) {
+		return target.href;
+	}
+	return $(target).attr('href') || "";
 }
 
 function posFooter() {
