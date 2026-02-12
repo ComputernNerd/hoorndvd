@@ -15,7 +15,7 @@ $(function (){
 	$('#content section a').not('.chapters>li>a').click(function(e) {
 		// VARS
 		var label = "";
-		target = e.target;
+		var target = e.target;
 		while( target.nodeName != "A" && target.parentNode) {
 			target = target.parentNode;
 		}
@@ -26,6 +26,7 @@ $(function (){
 				
 		// open audio and video in overlay, open video in new window
 		if ($('span', this).hasClass('audio')) {
+			e.preventDefault();
 			if ($(this).parent().is('dd')) {
 				label += $(this).parent().prevAll('dt:first').text() + " - ";
 			}
@@ -33,6 +34,7 @@ $(function (){
 			openAudio(target, 40, 480, label);
 			return false;
 		} else if ($('span', this).hasClass('video')) {
+			e.preventDefault();
 			var h = !$(this).attr("video-height") ? 480: $(this).attr("video-height");
 			var w = !$(this).attr("video-width") ? 640 : $(this).attr("video-width");
 			
